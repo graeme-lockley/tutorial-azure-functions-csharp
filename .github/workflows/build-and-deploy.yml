@@ -38,6 +38,7 @@ jobs:
 
               if [[ "`az group show --name $RG_NAME --query location`" -neq "$RG_LOCATION" ]]
               then
-                echo Warning: location is different
+                echo Error: location is different
+                exit 1
               end
             fi
