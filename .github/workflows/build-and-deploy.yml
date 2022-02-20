@@ -35,14 +35,4 @@ jobs:
               az group create --location $RG_LOCATION --name $RG_NAME
             else
               echo Resource Group: $RG_NAME already exists
-
-              ACTUAL_LOCATION=`az group show --name $RG_NAME --query location`
-              if [[ $ACTUAL_LOCATION -ne "$RG_LOCATION" ]]
-              then
-                echo Error: location is different
-                echo "  Setting: $RG_LOCATION"
-                echo "  Actual: $ACTUAL_LOCATION"
-
-                exit 1
-              fi
             fi
