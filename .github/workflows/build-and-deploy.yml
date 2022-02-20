@@ -1,0 +1,22 @@
+name: build-and-deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-az-infrastructure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Show resource groups'
+        uses: azure/CLI@v1
+        with:
+          inlineScript: az group list
