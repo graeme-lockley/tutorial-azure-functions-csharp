@@ -10,6 +10,10 @@ env:
   RG_NAME: 'tutorialAzureFunctionsCSharpRG'
   RG_LOCATION: 'westus'
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build-az-infrastructure:
     runs-on: ubuntu-latest
@@ -29,10 +33,10 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            EXISTS=`az group exists --name ${{ RG_NAME }}`
+            EXISTS=`az group exists --name $RG_NAME`
             if [[ "$EXISTS" -eq "true" ]]
             then
-              echo Resource Group: ${{ RG_NAME }} already exists
+              echo Resource Group: $RG_NAME already exists
             else
-              az group create --location ${{ RG_LOCATION }} --name ${{ RG_NAME }}
+              az group create --location $RG_LOCATION --name $RG_NAME
             fi
