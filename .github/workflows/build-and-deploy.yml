@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+
       - name: 'Login to Azure'
         uses: azure/login@v1
         with:
@@ -27,12 +30,6 @@ jobs:
       - name: 'List resource groups'
         run: az group list
 
-      - name: 'Create/update resource group'
+      - name: 'Setup resource groups'
         run: |
-            EXISTS=`az group exists --name $RG_NAME`
-            if [[ "$EXISTS" -ne "true" ]]
-            then
-              az group create --location $RG_LOCATION --name $RG_NAME
-            else
-              echo Resource Group: $RG_NAME already exists
-            fi
+          az deployment sub create --location eastus --template-file ./infra/main.bicep --parameters resourceGroupName=tutorialAzureFunctionsCSharpRG resourceGroupLocation=eastus
