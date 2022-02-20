@@ -30,9 +30,14 @@ jobs:
       - name: 'Create/update resource group'
         run: |
             EXISTS=`az group exists --name $RG_NAME`
-            if [[ "$EXISTS" -eq "true" ]]
+            if [[ "$EXISTS" -neq "true" ]]
             then
-              echo Resource Group: $RG_NAME already exists
-            else
               az group create --location $RG_LOCATION --name $RG_NAME
+            else
+              echo Resource Group: $RG_NAME already exists
+
+              if [[ "`az group show --name $RG_NAME --query location`" -neq "$RG_LOCATION" ]]
+              then
+                echo Warning: location is different
+              end
             fi
