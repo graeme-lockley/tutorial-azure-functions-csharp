@@ -40,5 +40,5 @@ jobs:
               then
                 echo Error: location is different
                 exit 1
-              end
+              fi
             fi
