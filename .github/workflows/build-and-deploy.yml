@@ -24,10 +24,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: 'Show resource groups'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: az group list
+      - run: az group list
 
       - name: 'Create tutorialAzureFunctionsCSharpRG resource group'
         uses: azure/CLI@v1
