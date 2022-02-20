@@ -24,4 +24,4 @@ jobs:
       - name: 'Create tutorialAzureFunctionsCSharpRG resource group'
         uses: azure/CLI@v1
         with:
-          inlineScript: az group create --location westus --name tutorialAzureFunctionsCSharpRG
+          inlineScript: az group create --location centralus --name tutorialAzureFunctionsCSharpRG
