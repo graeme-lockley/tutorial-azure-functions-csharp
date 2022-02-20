@@ -24,12 +24,11 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - run: az group list
+      - name: 'List resource groups'
+        run: az group list
 
-      - name: 'Create tutorialAzureFunctionsCSharpRG resource group'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
+      - name: 'Create/update resource group'
+        run: |
             EXISTS=`az group exists --name $RG_NAME`
             if [[ "$EXISTS" -eq "true" ]]
             then
