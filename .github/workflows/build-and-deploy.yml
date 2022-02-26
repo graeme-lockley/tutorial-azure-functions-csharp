@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  RG_NAME: 'tutorialAzureFunctionsCSharpRG'
-  RG_LOCATION: 'westus'
-
 defaults:
   run:
     shell: bash
@@ -27,9 +23,8 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: 'List resource groups'
-        run: az group list
-
       - name: 'Setup resource groups'
-        run: |
-          az deployment sub create --location southafricanorth --template-file ./infra/main.bicep --parameters @./infra/parameters.json
+        run: ./scripts/configure-resource-groups.sh
+
+      - name: 'Setup functions'
+        run: ./scripts/configure-functions.sh

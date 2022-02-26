@@ -1,0 +1,2 @@
+RESOURCE_GROUP_NAME=tutorialAzureFunctionsCSharpRG
+RESOURCE_GROUP_LOCATION=centralus
