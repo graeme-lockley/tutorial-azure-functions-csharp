@@ -32,4 +32,4 @@ jobs:
 
       - name: 'Setup resource groups'
         run: |
-          az deployment sub create --location eastus --template-file ./infra/main.bicep --parameters @./infra/parameters.json
+          az deployment sub create --location southafricanorth --template-file ./infra/main.bicep --parameters @./infra/parameters.json
