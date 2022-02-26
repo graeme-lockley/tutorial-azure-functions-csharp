@@ -1,10 +1,11 @@
+@minLength(3)
 param appName string
+
 param location string = resourceGroup().location
 
 var storageAccountName = '${substring(appName, 0, min(10, length(appName)))}${uniqueString(resourceGroup().id)}'
 var hostingPlanName = '${appName}${uniqueString(resourceGroup().id)}'
 var appInsightsName = '${appName}${uniqueString(resourceGroup().id)}'
-var functionAppName = '${appName}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: storageAccountName
@@ -26,7 +27,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02-preview' = {
   }
   tags: {
     // circular dependency means we can't reference functionApp directly  /subscriptions/<subscriptionId>/resourceGroups/<rg-name>/providers/Microsoft.Web/sites/<appName>"
-    'hidden-link:/subscriptions/${subscription().id}/resourceGroups/${resourceGroup().name}/providers/Microsoft.Web/sites/${functionAppName}': 'Resource'
+    'hidden-link:/subscriptions/${subscription().id}/resourceGroups/${resourceGroup().name}/providers/Microsoft.Web/sites/${appName}': 'Resource'
   }
 }
 
@@ -40,7 +41,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2020-10-01' = {
 }
 
 resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
-  name: functionAppName
+  name: appName
   location: location
   kind: 'functionapp'
   properties: {
@@ -74,10 +75,4 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
       ]
     }
   }
-
-  dependsOn: [
-    appInsights
-    hostingPlan
-    storageAccount
-  ]
 }
