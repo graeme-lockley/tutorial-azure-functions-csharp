@@ -23,8 +23,7 @@ jobs:
         
   build-azure-infrastructure:
     runs-on: ubuntu-latest
-    depends-on: 
-      - lint-source-files
+    needs: lint-source-files
 
     steps:
       - name: 'Checkout source code'
