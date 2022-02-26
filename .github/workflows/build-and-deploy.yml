@@ -32,4 +32,4 @@ jobs:
 
       - name: 'Setup resource groups'
         run: |
-          az deployment sub create --location eastus --template-file ./infra/main.bicep --parameters resourceGroupName=tutorialAzureFunctionsCSharpRG resourceGroupLocation=eastus
+          az deployment sub create --location eastus --template-file ./infra/main.bicep --parameters @./infra/parameters.json
