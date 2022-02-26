@@ -11,8 +11,20 @@ defaults:
     shell: bash
 
 jobs:
+  lint-source-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+
+      - name: 'Lint Bicep source'
+        run: echo "Success"
+        
   build-azure-infrastructure:
     runs-on: ubuntu-latest
+    depends-on: 
+      - lint-source-files
 
     steps:
       - name: 'Checkout source code'
