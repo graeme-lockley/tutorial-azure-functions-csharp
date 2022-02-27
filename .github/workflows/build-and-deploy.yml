@@ -25,7 +25,7 @@ jobs:
       - name: Simple Dotenv
         uses: xom9ikk/dotenv@v1.0.2
         with:
-          path: ./.env
+          path: .
 
       - name: show dotenv
         run: echo ${{ env }}
