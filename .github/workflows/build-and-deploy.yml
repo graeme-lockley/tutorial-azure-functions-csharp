@@ -91,10 +91,10 @@ jobs:
           resourceGroupName: 'tutorialAzureFunctionsCSharpRG'
           appName: 'ffunc'
 
-      - name: Show Profile
-        shell: bash
-        run: |
-          echo "WebApp: ${{ steps.webapp.outputs.profile }}"
+      # - name: Show Profile
+      #   shell: bash
+      #   run: |
+      #     echo "WebApp: ${{ steps.webapp.outputs.profile }}"
 
       - name: 'Run Azure Functions Action'
         uses: azure/functions-action@v1
