@@ -9,5 +9,5 @@ az deployment sub create \
     --name "configure-resource-groups" \
     --location centralus \
     --template-file "${SCRIPT_DIR}/../infra/resource-groups.bicep" \
-    --parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" \
-    --parameters "resourceGroupLocation=${RESOURCE_GROUP_LOCATION}"
+    --parameters "resourceGroupName=$RESOURCE_GROUP_NAME" \
+    --parameters "resourceGroupLocation=$RESOURCE_GROUP_LOCATION"
