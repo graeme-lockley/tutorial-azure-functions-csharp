@@ -59,9 +59,9 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: 'Setup .NET Environment'
-          uses: actions/setup-dotnet@v1
-          with:
-            dotnet-version: '6.0.x'
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
       
       - name: 'Build functions'
         run: |
