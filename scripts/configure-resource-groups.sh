@@ -2,8 +2,8 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-# shellcheck source=scripts/_env.sh
-. "$SCRIPT_DIR"/_env.sh
+# shellcheck source=scripts/.env
+. "$SCRIPT_DIR"/.env
 
 az deployment sub create \
     --name "configure-resource-groups" \
