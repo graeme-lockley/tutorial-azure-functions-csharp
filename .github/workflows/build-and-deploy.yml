@@ -6,6 +6,14 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  DOTNET_VERSION: '6.0.x'
+  AZURE_RESOURCE_GROUP_NAME: 'tutorialAzureFunctionsCSharpRG'
+  AZURE_FUNCTIONAPP_NAME: 'greetingservice'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '${{ github.workspace }}/src'
+  BUILD_OUTPUT_PATH: '${{ github.workspace }}/src/output'
+  BUILD_PACKAGE_NAME: 'az-func.zip'
+
 defaults:
   run:
     shell: bash
@@ -66,4 +74,29 @@ jobs:
       - name: 'Build functions'
         run: |
           cd ./src
-          dotnet build
+          mkdir output
+          dotnet publish --configuration Release --output output
+
+      - name: 'Bundle functions'
+        run: |
+          cd ./src/output
+          zip -r az-func.zip .
+
+      - name: 'Fetching Azure Functions Publishing Profile'
+        id: fncapp
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+              $profile = ""
+              $profile = Get-AzWebAppPublishingProfile -ResourceGroupName $env:AZURE_RESOURCE_GROUP_NAME -Name $env:AZURE_FUNCTIONAPP_NAME
+              $profile = $profile.Replace("`r", "").Replace("`n", "")
+              Write-Output "::set-output name=pubprofile::$profile"
+              Remove-Variable profile
+          azPSVersion: "latest"
+
+      - name: 'Run Azure Functions Action'
+        uses: azure/functions-action@v1
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
+          publish-profile: ${{ steps.fncapp.outputs.pubprofile }}
