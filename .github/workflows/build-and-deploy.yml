@@ -72,7 +72,7 @@ jobs:
       - name: 'Setup .NET Environment'
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
       
       - name: 'Build functions'
         run: |
@@ -83,12 +83,12 @@ jobs:
         run: |
           mkdir -p ${{ env.BUILD_OUTPUT_PATH }}
           cd ./src
-          dotnet publish --configuration Release --output ${{ env.BUILD_OUTPUT_PATH }}
+          dotnet publish --configuration Release --output ${{ GITHUB_WORKSPACE }}/${{ env.BUILD_OUTPUT_PATH }}
 
       - name: 'Bundle distribution'
         run: |
           cd ${{ env.BUILD_OUTPUT_PATH }}
-          zip -r ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }} .
+          zip -r ${{ GITHUB_WORKSPACE }}/${{ env.BUILD_PACKAGE_PATH_FILE_NAME }} .
 
       - name: Get FunctionApp publish profile
         id: webapp
@@ -97,7 +97,7 @@ jobs:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
         with:
           resourceGroupName: 'tutorialAzureFunctionsCSharpRG'
-          appName: 'ffunc'
+          appName: ${{ env.FUNCTIONAPP_NAME }}
 
       # - name: Show Profile
       #   shell: bash
@@ -107,6 +107,6 @@ jobs:
       - name: 'Publish distribution to Azure'
         uses: azure/functions-action@v1
         with:
-          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          package: ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
+          app-name: ${{ env.FUNCTIONAPP_NAME }}
+          package: ${{ env.BUILD_PACKAGE_PATH_FILE_NAME }}
           publish-profile: ${{ steps.webapp.outputs.profile }}
