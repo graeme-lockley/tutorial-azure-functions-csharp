@@ -1,2 +1,4 @@
-RESOURCE_GROUP_NAME=tutorialAzureFunctionsCSharpRG
-RESOURCE_GROUP_LOCATION=centralus
+#!/usr/bin/env bash
+
+export RESOURCE_GROUP_NAME=tutorialAzureFunctionsCSharpRG
+export RESOURCE_GROUP_LOCATION=centralus
