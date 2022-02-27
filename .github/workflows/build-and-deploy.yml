@@ -25,6 +25,8 @@ jobs:
       - name: Dotenv Action
         id: dotenv
         uses: falti/dotenv-action@v0.2.7
+        with:
+          path: ./.env
 
       - name: show dotenv
         run: echo ${{ steps.dotenv.outputs }}
