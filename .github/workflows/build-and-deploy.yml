@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  DOTNET_VERSION: '6.0.x'
-
 defaults:
   run:
     shell: bash
@@ -50,7 +47,7 @@ jobs:
 
   build-deploy-functions:
     runs-on: ubuntu-latest
-    needs: lint-source-files
+    needs: build-azure-infrastructure
 
     steps:
       - name: 'Checkout source code'
@@ -64,7 +61,7 @@ jobs:
       - name: 'Setup .NET Environment'
           uses: actions/setup-dotnet@v1
           with:
-            dotnet-version: ${{ env.DOTNET_VERSION }}
+            dotnet-version: '6.0.x'
       
       - name: 'Build functions'
         run: |
