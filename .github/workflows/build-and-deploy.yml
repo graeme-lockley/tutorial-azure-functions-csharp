@@ -74,10 +74,15 @@ jobs:
       - name: 'Build functions'
         run: |
           cd ./src
+          dotnet build
+
+      - name: 'Create distribution'
+        run: |
+          cd ./src
           mkdir output
           dotnet publish --configuration Release --output output
 
-      - name: 'Bundle functions'
+      - name: 'Bundle distribution'
         run: |
           cd ./src/output
           zip -r az-func.zip .
@@ -96,7 +101,7 @@ jobs:
       #   run: |
       #     echo "WebApp: ${{ steps.webapp.outputs.profile }}"
 
-      - name: 'Publish functions'
+      - name: 'Publish distribution to Azure'
         uses: azure/functions-action@v1
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
