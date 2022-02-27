@@ -6,13 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  DOTNET_VERSION: '6.0.x'
-  AZURE_FUNCTIONAPP_NAME: 'ffunc'
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: '${{ github.workspace }}/src'
-  BUILD_OUTPUT_PATH: '${{ github.workspace }}/src/output'
-  BUILD_PACKAGE_NAME: 'az-func.zip'
-
 defaults:
   run:
     shell: bash
@@ -22,17 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout source code'
-        uses: actions/checkout@v2
-
-      - name: Simple Dotenv
-        uses: xom9ikk/dotenv@v1.0.2
-        with:
-          path: ./scripts
-
-      - name: show dotenv
-        run: echo ${{ env }}
-
       - name: 'Checkout source code'
         uses: actions/checkout@v2
 
@@ -81,6 +63,11 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Populate env from ./scripts/.env
+        uses: xom9ikk/dotenv@v1.0.2
+        with:
+          path: ./scripts
 
       - name: 'Setup .NET Environment'
         uses: actions/setup-dotnet@v1
