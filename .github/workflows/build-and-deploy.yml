@@ -30,7 +30,7 @@ jobs:
 
       - name: 'Lint bash scripts'
         run: |
-          shellcheck scripts/*.sh
+          shellcheck -x scripts/*.sh
 
   build-azure-infrastructure:
     runs-on: ubuntu-latest
@@ -81,13 +81,13 @@ jobs:
 
       - name: 'Create distribution'
         run: |
-          mkdir -p ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
+          mkdir -p ${{ env.BUILD_OUTPUT_PATH }}
           cd ./src
           dotnet publish --configuration Release --output ${{ env.BUILD_OUTPUT_PATH }}
 
       - name: 'Bundle distribution'
         run: |
-          cd ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
+          cd ${{ env.BUILD_OUTPUT_PATH }}
           zip -r ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }} .
 
       - name: Get FunctionApp publish profile
