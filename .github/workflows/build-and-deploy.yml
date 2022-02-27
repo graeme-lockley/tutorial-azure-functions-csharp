@@ -83,12 +83,12 @@ jobs:
         run: |
           mkdir -p ${{ env.BUILD_OUTPUT_PATH }}
           cd ./src
-          dotnet publish --configuration Release --output ${{ GITHUB_WORKSPACE }}/${{ env.BUILD_OUTPUT_PATH }}
+          dotnet publish --configuration Release --output ${{ github.workspace }}/${{ env.BUILD_OUTPUT_PATH }}
 
       - name: 'Bundle distribution'
         run: |
           cd ${{ env.BUILD_OUTPUT_PATH }}
-          zip -r ${{ GITHUB_WORKSPACE }}/${{ env.BUILD_PACKAGE_PATH_FILE_NAME }} .
+          zip -r ${{ github.workspace }}/${{ env.BUILD_PACKAGE_PATH_FILE_NAME }} .
 
       - name: Get FunctionApp publish profile
         id: webapp
