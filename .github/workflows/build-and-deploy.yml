@@ -22,14 +22,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Dotenv Action
-        id: dotenv
-        uses: falti/dotenv-action@v0.2.7
+      - name: Simple Dotenv
+        uses: xom9ikk/dotenv@v1.0.2
         with:
           path: ./.env
 
       - name: show dotenv
-        run: echo ${{ steps.dotenv.outputs }}
+        run: echo ${{ env }}
 
       - name: 'Checkout source code'
         uses: actions/checkout@v2
