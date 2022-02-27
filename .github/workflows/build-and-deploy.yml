@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  DOTNET_VERSION: '6.0.x'
+
 defaults:
   run:
     shell: bash
@@ -44,3 +47,26 @@ jobs:
 
       - name: 'Setup functions'
         run: ./scripts/configure-functions.sh
+
+  build-deploy-functions:
+    runs-on: ubuntu-latest
+    needs: lint-source-files
+
+    steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Setup .NET Environment'
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: ${{ env.DOTNET_VERSION }}
+      
+      - name: 'Build functions'
+        run: |
+          cd ./src
+          dotnet build
