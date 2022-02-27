@@ -34,10 +34,9 @@ jobs:
       - name: 'Lint Bicep source'
         run: ./scripts/lint-bicep.sh
 
-      - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@master
-        with:
-          scandir: './scripts'
+      - name: 'Lint bash scripts'
+        run: |
+          shellcheck scripts/*.sh
 
   build-azure-infrastructure:
     runs-on: ubuntu-latest
