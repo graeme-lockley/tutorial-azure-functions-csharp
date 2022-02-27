@@ -2,7 +2,8 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-. "${SCRIPT_DIR}/_env.sh"
+# shellcheck source=scripts/_env.sh
+. "$SCRIPT_DIR"/_env.sh
 
 for FILE in "$SCRIPT_DIR"/../infra/*.bicep
 do
@@ -13,7 +14,7 @@ do
         echo Error: Lint Failed
         cat output.log
         exit 1
-    elif [ "$( cat output.log | wc -l )" -ne "0" ]
+    elif [ "$( wc -l < output.log )" -ne "0" ]
     then
         echo Warnings: Lint Failed
         cat output.log
