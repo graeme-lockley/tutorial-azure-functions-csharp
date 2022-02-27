@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout source code'
+      - name: Checkout source code
         uses: actions/checkout@v2
 
       - name: 'Lint Bicep source'
@@ -25,10 +25,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout source code'
+      - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: 'Lint bash scripts'
+      - name: Lint bash scripts
         run: ./scripts/lint-bash.sh
 
   build-azure-infrastructure:
@@ -36,18 +36,18 @@ jobs:
     needs: [lint-bicep, lint-bash]
 
     steps:
-      - name: 'Checkout source code'
+      - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: 'Login to Azure'
+      - name: Login to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: 'Setup resource groups'
+      - name: Setup resource groups
         run: ./scripts/configure-resource-groups.sh
 
-      - name: 'Setup functions'
+      - name: Setup functions
         run: ./scripts/configure-functions.sh
 
   build-deploy-functions:
@@ -55,10 +55,10 @@ jobs:
     needs: build-azure-infrastructure
 
     steps:
-      - name: 'Checkout source code'
+      - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: 'Login to Azure'
+      - name: Login to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -68,15 +68,15 @@ jobs:
         with:
           path: ./scripts
 
-      - name: 'Setup .NET Environment'
+      - name: Setup .NET Environment
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
       
-      - name: 'Compile source'
+      - name: Compile source
         run: ./scripts/build-compile.sh
 
-      - name: 'Create distribution'
+      - name: Create distribution
         run: ./scripts/build-distribution.sh
 
       - name: Get FunctionApp publish profile
@@ -93,7 +93,7 @@ jobs:
       #   run: |
       #     echo "WebApp: ${{ steps.webapp.outputs.profile }}"
 
-      - name: 'Publish distribution to Azure'
+      - name: Publish distribution to Azure
         uses: azure/functions-action@v1
         with:
           app-name: ${{ env.FUNCTIONAPP_NAME }}
