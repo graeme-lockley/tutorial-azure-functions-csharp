@@ -25,11 +25,10 @@ jobs:
       - name: Dotenv Action
         id: dotenv
         uses: falti/dotenv-action@v0.2.7
-        path: ./scripts/.env
 
       - name: show dotenv
         run: echo ${{ steps.dotenv.outputs }}
-        
+
       - name: 'Checkout source code'
         uses: actions/checkout@v2
 
