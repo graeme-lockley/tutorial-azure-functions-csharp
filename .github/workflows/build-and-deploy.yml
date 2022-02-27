@@ -8,7 +8,6 @@ on:
 
 env:
   DOTNET_VERSION: '6.0.x'
-  AZURE_RESOURCE_GROUP_NAME: 'tutorialAzureFunctionsCSharpRG'
   AZURE_FUNCTIONAPP_NAME: 'ffunc'
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '${{ github.workspace }}/src'
   BUILD_OUTPUT_PATH: '${{ github.workspace }}/src/output'
@@ -23,6 +22,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Dotenv Action
+        id: dotenv
+        uses: falti/dotenv-action@v0.2.7
+        path: ./scripts/.env
+
+      - name: show dotenv
+        run: echo ${{ steps.dotenv.outputs }}
+        
       - name: 'Checkout source code'
         uses: actions/checkout@v2
 
