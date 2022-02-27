@@ -9,7 +9,7 @@ on:
 env:
   DOTNET_VERSION: '6.0.x'
   AZURE_RESOURCE_GROUP_NAME: 'tutorialAzureFunctionsCSharpRG'
-  AZURE_FUNCTIONAPP_NAME: 'greetingservice'
+  AZURE_FUNCTIONAPP_NAME: 'ffunc'
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '${{ github.workspace }}/src'
   BUILD_OUTPUT_PATH: '${{ github.workspace }}/src/output'
   BUILD_PACKAGE_NAME: 'az-func.zip'
