@@ -18,8 +18,13 @@ jobs:
       - name: 'Checkout source code'
         uses: actions/checkout@v2
 
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: 'Lint Bicep source'
-        run: echo "Success"
+        run: ./scripts/lint-bicep.sh
         
   build-azure-infrastructure:
     runs-on: ubuntu-latest
