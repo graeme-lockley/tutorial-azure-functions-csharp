@@ -84,16 +84,16 @@ jobs:
 
       - name: 'Create distribution'
         run: |
+          mkdir -p ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
           cd ./src
-          mkdir output
-          dotnet publish --configuration Release --output output
+          dotnet publish --configuration Release --output ${{ env.BUILD_OUTPUT_PATH }}
 
       - name: 'Bundle distribution'
         run: |
-          cd ./src/output
-          zip -r az-func.zip .
+          cd ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
+          zip -r ${{ env.BUILD_OUTPUT_PATH }}/${{ env.BUILD_PACKAGE_NAME }} .
 
-      - name: Get WebApp/FunctionApp publish profile
+      - name: Get FunctionApp publish profile
         id: webapp
         uses: aliencube/publish-profile-actions@v1
         env:
