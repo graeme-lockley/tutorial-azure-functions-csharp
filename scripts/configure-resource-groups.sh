@@ -6,7 +6,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 . "$SCRIPT_DIR"/.env
 
 az deployment sub create \
-    --name "configure-resource-groups" \
+    --name "tafc-configure-resource-groups" \
     --location "$RESOURCE_GROUP_LOCATION" \
     --template-file "${SCRIPT_DIR}/../infra/resource-groups.bicep" \
     --parameters "resourceGroupName=$RESOURCE_GROUP_NAME" \
